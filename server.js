@@ -9,21 +9,10 @@ let books = [];
 app.get("/", (req, res) => {
     res.send("Library API is running!");
 });
-
 app.post("/books", (req, res) => {
     books.push(req.body);
     res.json({ message: "Book added!" });
 });
-
-app.get("/books", (req, res) => {
-    res.json(books);
-});
-
-app.get("/books/:id", (req, res) => {
-    const book = books.find(b => b.book_id == req.params.id);
-    res.json(book || { error: "Book not found" });
-});
-
 app.put("/books/:id", (req, res) => {
     const book = books.find(b => b.book_id == req.params.id);
     if (!book) return res.status(404).json({ error: "Book not found" });
@@ -31,7 +20,6 @@ app.put("/books/:id", (req, res) => {
     Object.assign(book, req.body);
     res.json({ message: "Book updated!", book });
 });
-
 app.delete("/books/:id", (req, res) => {
     books = books.filter(b => b.book_id != req.params.id);
     res.json({ message: "Book deleted!" });
